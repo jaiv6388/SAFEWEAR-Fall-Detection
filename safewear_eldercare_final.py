@@ -10,6 +10,85 @@ from datetime import datetime
 
 st.set_page_config(page_title="SAFEWEAR", page_icon="🛡️", layout="wide")
 
+# Force a consistent LIGHT UI on local + Streamlit Community Cloud.
+st.markdown("""
+<style>
+:root {
+  color-scheme: light !important;
+}
+html, body, [data-testid="stAppViewContainer"], .stApp,
+[data-testid="stMain"], [data-testid="stMainBlockContainer"] {
+  background: #ffffff !important;
+  color: #171717 !important;
+}
+[data-testid="stHeader"] {
+  background: rgba(255,255,255,0.96) !important;
+}
+[data-testid="stSidebar"] {
+  background: #ffffff !important;
+}
+
+/* Text and labels */
+.stMarkdown, .stMarkdown p, .stMarkdown span,
+label, [data-testid="stWidgetLabel"], [data-testid="stWidgetLabel"] *,
+[data-testid="stCaptionContainer"], [data-testid="stCaptionContainer"] * {
+  color: #171717 !important;
+}
+
+/* Text inputs / text areas / number inputs */
+div[data-baseweb="input"] > div,
+div[data-baseweb="textarea"] > div,
+.stTextInput input, .stNumberInput input, .stTextArea textarea {
+  background-color: #ffffff !important;
+  color: #171717 !important;
+  -webkit-text-fill-color: #171717 !important;
+}
+.stTextInput input::placeholder, .stTextArea textarea::placeholder {
+  color: #777777 !important;
+  opacity: 1 !important;
+}
+
+/* Select boxes */
+div[data-baseweb="select"] > div {
+  background-color: #ffffff !important;
+  color: #171717 !important;
+}
+div[data-baseweb="select"] span,
+div[data-baseweb="select"] input {
+  color: #171717 !important;
+  -webkit-text-fill-color: #171717 !important;
+}
+
+/* Number input +/- controls */
+.stNumberInput button {
+  background-color: #f5f5f5 !important;
+  color: #171717 !important;
+}
+
+/* Popovers / dropdown menus */
+div[role="listbox"], ul[role="listbox"],
+[data-baseweb="popover"], [data-baseweb="menu"] {
+  background-color: #ffffff !important;
+  color: #171717 !important;
+}
+div[role="option"], li[role="option"] {
+  background-color: #ffffff !important;
+  color: #171717 !important;
+}
+
+/* Cards / bordered containers */
+[data-testid="stVerticalBlockBorderWrapper"] {
+  background-color: #ffffff !important;
+}
+
+/* Force browser-native form controls to light mode */
+input, textarea, select, button {
+  color-scheme: light !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+
 FIREBASE_URL = "https://safewear-e1b21-default-rtdb.firebaseio.com/sensor_readings.json"
 LATITUDE = 28.632468
 LONGITUDE = 77.445071
