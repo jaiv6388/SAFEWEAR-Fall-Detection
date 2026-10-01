@@ -120,6 +120,27 @@ FIREBASE_URL = "https://safewear-e1b21-default-rtdb.firebaseio.com/sensor_readin
 LATITUDE = 28.632468
 LONGITUDE = 77.445071
 MAPS_LINK = f"https://www.google.com/maps/search/?api=1&query={LATITUDE},{LONGITUDE}"
+NTFY_TOPIC = "Safewear-JV-2026"
+NTFY_URL = f"https://ntfy.sh/{NTFY_TOPIC}"
+
+def send_ntfy_sos(name):
+    """Send the manual SAFEWEAR SOS to the subscribed ntfy phone topic."""
+    message = (
+        f"Emergency SOS triggered for {name}. Assistance required. "
+        f"Location: {MAPS_LINK}"
+    )
+    r = requests.post(
+        NTFY_URL,
+        data=message.encode("utf-8"),
+        headers={
+            "Title": "SAFEWEAR EMERGENCY ALERT",
+            "Priority": "urgent",
+            "Tags": "rotating_light,warning",
+            "Click": MAPS_LINK,
+        },
+        timeout=8,
+    )
+    r.raise_for_status()
 
 st.markdown("""
 <style>
@@ -392,8 +413,13 @@ with st.container(border=True):
     if not st.session_state.sos:
         st.warning("Manual emergency alert is inactive.")
         if st.button("🚨 SEND SOS", use_container_width=True):
-            st.session_state.sos = True
-            st.rerun()
+            try:
+                send_ntfy_sos(display_name)
+                st.session_state.sos = True
+                st.toast("SOS sent to phone successfully.", icon="🚨")
+                st.rerun()
+            except Exception as e:
+                st.error(f"SOS notification could not be sent: {e}")
     else:
         st.error("🚨 Emergency alert is ACTIVE.")
         st.link_button("📍 Open Emergency Location in Google Maps", MAPS_LINK, use_container_width=True)
