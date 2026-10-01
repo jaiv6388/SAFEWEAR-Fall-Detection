@@ -4,6 +4,33 @@ import plotly.graph_objects as go
 import requests
 from datetime import datetime
 
+# Plotly defaults: white charts with dark, readable labels
+import plotly.io as pio
+pio.templates["safewear_light"] = pio.templates["plotly_white"]
+pio.templates["safewear_light"].layout.update(
+    paper_bgcolor="white",
+    plot_bgcolor="white",
+    font=dict(color="#111827", size=14),
+    title=dict(font=dict(color="#111827")),
+    xaxis=dict(
+        color="#111827",
+        title_font=dict(color="#111827"),
+        tickfont=dict(color="#111827"),
+        gridcolor="#E5E7EB",
+        zerolinecolor="#CBD5E1"
+    ),
+    yaxis=dict(
+        color="#111827",
+        title_font=dict(color="#111827"),
+        tickfont=dict(color="#111827"),
+        gridcolor="#E5E7EB",
+        zerolinecolor="#CBD5E1"
+    ),
+    legend=dict(font=dict(color="#111827"))
+)
+pio.templates.default = "safewear_light"
+
+
 # ============================================================
 # SAFEWEAR — FINAL FIREBASE INTEGRATION
 # ============================================================
@@ -226,6 +253,101 @@ if not st.session_state.setup_complete:
             st.rerun()
     st.stop()
 
+# Final Cloud UI overrides: consistent light theme, readable text, equal controls.
+st.markdown("""
+<style>
+/* Global readable text */
+.stApp, .stApp p, .stApp span, .stApp label,
+.stApp h1, .stApp h2, .stApp h3, .stApp h4,
+[data-testid="stMarkdownContainer"], [data-testid="stMarkdownContainer"] * {
+    color:#171717 !important;
+}
+
+/* Keep hero/banner text white */
+.hero, .hero *, .hero-card, .hero-card * {
+    color:white !important;
+}
+
+/* All form controls: same white appearance and height */
+.stTextInput div[data-baseweb="input"],
+.stNumberInput div[data-baseweb="input"],
+.stSelectbox div[data-baseweb="select"] > div {
+    background:#ffffff !important;
+    border-color:#9ca3af !important;
+    min-height:42px !important;
+    height:42px !important;
+    border-radius:8px !important;
+}
+.stTextInput input, .stNumberInput input,
+.stSelectbox div[data-baseweb="select"] span {
+    color:#171717 !important;
+    -webkit-text-fill-color:#171717 !important;
+    background:#ffffff !important;
+}
+.stSelectbox svg { fill:#171717 !important; }
+
+/* Number +/- area */
+.stNumberInput button {
+    height:40px !important;
+    background:#f8fafc !important;
+    color:#171717 !important;
+}
+
+/* Text areas */
+.stTextArea textarea {
+    background:#ffffff !important;
+    color:#171717 !important;
+    -webkit-text-fill-color:#171717 !important;
+    border-color:#9ca3af !important;
+    border-radius:8px !important;
+}
+
+/* Dropdown popup */
+div[data-baseweb="popover"], div[role="listbox"],
+div[role="option"] {
+    background:#ffffff !important;
+    color:#171717 !important;
+}
+
+/* Metrics: remove browser-selected/dark-looking value backgrounds */
+[data-testid="stMetric"] {
+    background:#ffffff !important;
+    color:#171717 !important;
+}
+[data-testid="stMetricValue"], [data-testid="stMetricValue"] * {
+    color:#171717 !important;
+    background:transparent !important;
+}
+
+/* Streamlit dataframe/table: light cells */
+[data-testid="stDataFrame"], [data-testid="stTable"] {
+    background:#ffffff !important;
+    color:#171717 !important;
+}
+[data-testid="stTable"] table,
+[data-testid="stTable"] thead,
+[data-testid="stTable"] tbody,
+[data-testid="stTable"] tr,
+[data-testid="stTable"] th,
+[data-testid="stTable"] td {
+    background:#ffffff !important;
+    color:#171717 !important;
+    border-color:#e5e7eb !important;
+}
+
+/* Plotly charts */
+.js-plotly-plot, .plot-container, .svg-container {
+    background:#ffffff !important;
+}
+
+/* Prevent dark color-scheme inheritance */
+html, body, .stApp, input, textarea, select {
+    color-scheme:light !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+
 # ============================================================
 # LIVE DASHBOARD
 # ============================================================
@@ -377,3 +499,341 @@ with b:
 st.divider()
 st.markdown("### 🛡️ SAFEWEAR")
 st.caption("Elder Care Fall Detection • ESP32 • MPU6050 • MQTT • Node-RED • Firebase")
+
+
+# Final theme override
+
+st.markdown("""
+<style>
+/* ===== SAFEWEAR ELDER CARE — NAVY + TEAL THEME ===== */
+:root { color-scheme: light !important; }
+
+html, body, .stApp, [data-testid="stAppViewContainer"],
+[data-testid="stMain"], [data-testid="stMainBlockContainer"] {
+    background:#F5F8FA !important;
+    color:#172033 !important;
+}
+
+/* Hero/header */
+.hero, .hero-card {
+    background:linear-gradient(120deg,#0B1F33 0%,#123A52 55%,#0F766E 100%) !important;
+    border:none !important;
+    box-shadow:0 14px 34px rgba(11,31,51,.14) !important;
+}
+.hero *, .hero-card * { color:#FFFFFF !important; }
+
+/* Headings and normal copy */
+.stApp h1,.stApp h2,.stApp h3,.stApp h4 {
+    color:#102A43 !important;
+}
+.stApp p,.stApp label,
+[data-testid="stWidgetLabel"],[data-testid="stWidgetLabel"] * {
+    color:#26384A !important;
+}
+
+/* Cards */
+[data-testid="stVerticalBlockBorderWrapper"],
+[data-testid="stMetric"] {
+    background:#FFFFFF !important;
+    border-color:#DCE5EA !important;
+    box-shadow:0 4px 14px rgba(16,42,67,.05) !important;
+}
+[data-testid="stMetricLabel"],[data-testid="stMetricLabel"] *,
+[data-testid="stMetricValue"],[data-testid="stMetricValue"] * {
+    color:#102A43 !important;
+    background:transparent !important;
+}
+
+/* Inputs: identical visual treatment */
+.stTextInput div[data-baseweb="input"],
+.stNumberInput div[data-baseweb="input"],
+.stSelectbox div[data-baseweb="select"] > div {
+    background:#FFFFFF !important;
+    border:1px solid #B8C7D1 !important;
+    border-radius:9px !important;
+    min-height:44px !important;
+    height:44px !important;
+    box-shadow:none !important;
+}
+.stTextInput input,.stNumberInput input,
+.stSelectbox div[data-baseweb="select"] span {
+    color:#172033 !important;
+    -webkit-text-fill-color:#172033 !important;
+    background:#FFFFFF !important;
+}
+.stSelectbox svg { fill:#172033 !important; }
+.stNumberInput button {
+    background:#EDF4F6 !important;
+    color:#102A43 !important;
+    height:42px !important;
+}
+.stTextArea textarea {
+    background:#FFFFFF !important;
+    color:#172033 !important;
+    -webkit-text-fill-color:#172033 !important;
+    border:1px solid #B8C7D1 !important;
+    border-radius:9px !important;
+}
+
+/* Dropdown popup */
+div[data-baseweb="popover"],div[role="listbox"],div[role="option"] {
+    background:#FFFFFF !important;
+    color:#172033 !important;
+}
+
+/* Buttons */
+.stButton > button {
+    background:#0F766E !important;
+    color:#FFFFFF !important;
+    border:1px solid #0F766E !important;
+    border-radius:10px !important;
+    font-weight:700 !important;
+}
+.stButton > button:hover {
+    background:#115E59 !important;
+    border-color:#115E59 !important;
+    color:#FFFFFF !important;
+}
+
+/* Table */
+[data-testid="stTable"],[data-testid="stDataFrame"] {
+    background:#FFFFFF !important;
+    color:#172033 !important;
+}
+[data-testid="stTable"] table,
+[data-testid="stTable"] thead,
+[data-testid="stTable"] tbody,
+[data-testid="stTable"] tr,
+[data-testid="stTable"] th,
+[data-testid="stTable"] td {
+    background:#FFFFFF !important;
+    color:#172033 !important;
+    border-color:#DCE5EA !important;
+}
+
+/* Captions */
+[data-testid="stCaptionContainer"],[data-testid="stCaptionContainer"] * {
+    color:#61758A !important;
+}
+
+/* Keep native controls in light rendering */
+input,textarea,select,button { color-scheme:light !important; }
+</style>
+""", unsafe_allow_html=True)
+
+
+# High-contrast Elder Care theme — final override
+
+st.markdown("""
+<style>
+/* ===== SAFEWEAR — HIGH-CONTRAST ELDER CARE THEME ===== */
+:root { color-scheme: light !important; }
+
+html, body, .stApp,
+[data-testid="stAppViewContainer"],
+[data-testid="stMain"],
+[data-testid="stMainBlockContainer"] {
+    background:#F7F8FA !important;
+    color:#111827 !important;
+}
+
+/* Warm yellow header: dark text for maximum readability */
+.hero, .hero-card {
+    background:#F4D35E !important;
+    border:1px solid #D7B83E !important;
+    box-shadow:0 8px 22px rgba(17,24,39,.10) !important;
+}
+.hero *, .hero-card * {
+    color:#111827 !important;
+    text-shadow:none !important;
+}
+
+/* Headings / body */
+.stApp h1,.stApp h2,.stApp h3,.stApp h4,
+.stApp p,.stApp label,
+[data-testid="stWidgetLabel"],
+[data-testid="stWidgetLabel"] * {
+    color:#111827 !important;
+}
+
+/* White cards with visible borders */
+[data-testid="stVerticalBlockBorderWrapper"],
+[data-testid="stMetric"] {
+    background:#FFFFFF !important;
+    border:1px solid #CBD5E1 !important;
+    box-shadow:0 3px 10px rgba(17,24,39,.05) !important;
+}
+[data-testid="stMetricLabel"], [data-testid="stMetricLabel"] *,
+[data-testid="stMetricValue"], [data-testid="stMetricValue"] * {
+    color:#111827 !important;
+    background:transparent !important;
+}
+
+/* Equal, high-contrast form controls */
+.stTextInput div[data-baseweb="input"],
+.stNumberInput div[data-baseweb="input"],
+.stSelectbox div[data-baseweb="select"] > div {
+    background:#FFFFFF !important;
+    border:2px solid #94A3B8 !important;
+    border-radius:8px !important;
+    min-height:46px !important;
+    height:46px !important;
+    box-shadow:none !important;
+}
+.stTextInput input,.stNumberInput input,
+.stSelectbox div[data-baseweb="select"] span {
+    color:#111827 !important;
+    -webkit-text-fill-color:#111827 !important;
+    background:#FFFFFF !important;
+    font-size:16px !important;
+}
+.stSelectbox svg { fill:#111827 !important; }
+
+.stNumberInput button {
+    background:#EEF2F7 !important;
+    color:#111827 !important;
+    height:44px !important;
+    border-color:#CBD5E1 !important;
+}
+
+.stTextArea textarea {
+    background:#FFFFFF !important;
+    color:#111827 !important;
+    -webkit-text-fill-color:#111827 !important;
+    border:2px solid #94A3B8 !important;
+    border-radius:8px !important;
+    font-size:16px !important;
+}
+
+/* Dropdown menus */
+div[data-baseweb="popover"],
+div[role="listbox"],
+div[role="option"] {
+    background:#FFFFFF !important;
+    color:#111827 !important;
+}
+
+/* Accessible blue action buttons */
+.stButton > button {
+    background:#2457A6 !important;
+    color:#FFFFFF !important;
+    border:2px solid #1E4788 !important;
+    border-radius:9px !important;
+    font-weight:700 !important;
+    min-height:46px !important;
+}
+.stButton > button:hover {
+    background:#1E4788 !important;
+    color:#FFFFFF !important;
+}
+
+/* Light readable tables */
+[data-testid="stTable"], [data-testid="stDataFrame"] {
+    background:#FFFFFF !important;
+    color:#111827 !important;
+}
+[data-testid="stTable"] table,
+[data-testid="stTable"] thead,
+[data-testid="stTable"] tbody,
+[data-testid="stTable"] tr,
+[data-testid="stTable"] th,
+[data-testid="stTable"] td {
+    background:#FFFFFF !important;
+    color:#111827 !important;
+    border-color:#CBD5E1 !important;
+}
+
+/* Secondary text */
+[data-testid="stCaptionContainer"],
+[data-testid="stCaptionContainer"] * {
+    color:#475569 !important;
+}
+
+/* Native browser controls */
+input,textarea,select,button { color-scheme:light !important; }
+</style>
+""", unsafe_allow_html=True)
+
+
+
+# ===== FINAL DRY-RUN VISUAL FIXES =====
+st.markdown("""
+<style>
+/* Purple SAFEWEAR banner stays purple; all banner text is white */
+.hero, .hero-card {
+    background: linear-gradient(110deg,#6420C7 0%,#8B4CF6 100%) !important;
+    border: none !important;
+}
+.hero *, .hero-card *,
+.hero h1, .hero h2, .hero h3, .hero p,
+.hero-card h1, .hero-card h2, .hero-card h3, .hero-card p {
+    color:#FFFFFF !important;
+    -webkit-text-fill-color:#FFFFFF !important;
+}
+
+/* Every normal Streamlit button: blue with white readable text */
+.stButton > button,
+.stButton > button *,
+[data-testid="stBaseButton-secondary"],
+[data-testid="stBaseButton-secondary"] *,
+[data-testid="stBaseButton-primary"],
+[data-testid="stBaseButton-primary"] * {
+    background:#2457A6 !important;
+    color:#FFFFFF !important;
+    -webkit-text-fill-color:#FFFFFF !important;
+    border-color:#1E4788 !important;
+    font-weight:700 !important;
+}
+.stButton > button:hover,
+[data-testid="stBaseButton-secondary"]:hover,
+[data-testid="stBaseButton-primary"]:hover {
+    background:#1E4788 !important;
+    color:#FFFFFF !important;
+}
+
+/* Links styled as buttons (e.g. map/location) */
+.stLinkButton a,
+.stLinkButton a *,
+[data-testid="stLinkButton"] a,
+[data-testid="stLinkButton"] a * {
+    background:#2457A6 !important;
+    color:#FFFFFF !important;
+    -webkit-text-fill-color:#FFFFFF !important;
+    border-color:#1E4788 !important;
+    font-weight:700 !important;
+}
+
+/* Plotly graph containers remain white */
+.js-plotly-plot, .plot-container, .plotly {
+    background:#FFFFFF !important;
+}
+
+/* Recent Sensor Events dataframe/table: light surface + dark text */
+[data-testid="stDataFrame"],
+[data-testid="stDataFrame"] > div,
+[data-testid="stDataFrame"] iframe,
+[data-testid="stTable"],
+[data-testid="stTable"] table,
+[data-testid="stTable"] thead,
+[data-testid="stTable"] tbody,
+[data-testid="stTable"] tr,
+[data-testid="stTable"] th,
+[data-testid="stTable"] td {
+    background:#FFFFFF !important;
+    color:#111827 !important;
+    -webkit-text-fill-color:#111827 !important;
+    border-color:#CBD5E1 !important;
+}
+[data-testid="stTable"] th {
+    background:#EAF0F7 !important;
+    color:#111827 !important;
+    font-weight:700 !important;
+}
+
+/* Keep dashboard setting/action buttons blue, force white labels */
+.stButton p, .stButton span {
+    color:#FFFFFF !important;
+    -webkit-text-fill-color:#FFFFFF !important;
+}
+</style>
+""", unsafe_allow_html=True)
